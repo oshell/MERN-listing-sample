@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Dropdown, Input } from 'semantic-ui-react'
+import { Dropdown, Input } from 'semantic-ui-react';
 
 const style = {
   wrapper: {
@@ -10,48 +10,8 @@ const style = {
   }
 }
 
-const filters = [
-  {
-    text: 'Best Match',
-    value: 'bestMatch',
-  },
-  {
-    text: 'Newest',
-    value: 'newest',
-  },
-  {
-    text: 'Rating',
-    value: 'ratingAverage',
-  },
-  {
-    text: 'Distance',
-    value: 'distance',
-  },
-  {
-    text: 'Popularity',
-    value: 'popularity',
-  },
-  {
-    text: 'Price',
-    value: 'averageProductPrice',
-  },
-  {
-    text: 'Delivery Costs',
-    value: 'deliveryCosts',
-  },
-  {
-    text: 'Minimum Cost',
-    value: 'minCost',
-  },
-];
 
 class SearchBar extends Component {
-  constructor(props) {
-      super(props);
-      this.state = {
-        currentFilter: filters[0]
-      }
-  }
 
   render() {
     return(
@@ -64,16 +24,14 @@ class SearchBar extends Component {
           floating
           labeled
           icon='filter'
-          options={filters}
+          options={this.props.filters}
           search
           defaultValue='0'
           onChange={(e, data) => {
-            const index = filters.map(o => o.value).indexOf(data.value);
-            this.setState({
-              currentFilter: filters[index]
-            });
+            this.props.changeFilter(data.value);
+            this.props.filterRestaurants(data.value, 'asc');
           }}
-          text={this.state.currentFilter.text}
+          text={this.props.currentFilter.text}
         />
       </div>
     );
