@@ -10,8 +10,19 @@ const style = {
   }
 }
 
+const sortingClasses = {
+  desc: 'sort amount down icon',
+  asc: 'sort amount up icon'
+}
+
 
 class SearchBar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      sorting: 'desc'
+    };
+  }
 
   render() {
     return(
@@ -29,10 +40,31 @@ class SearchBar extends Component {
           defaultValue='0'
           onChange={(e, data) => {
             this.props.changeFilter(data.value);
-            this.props.filterRestaurants(data.value, 'asc');
+            this.props.filterRestaurants(data.value, this.state.sorting);
           }}
           text={this.props.currentFilter.text}
         />
+      <button className="ui icon button"
+          style={style.filter}
+          onClick={()=>{
+            // cache var, since accessing right after setting will cause bugs
+            let sorting = this.state.sorting;
+
+            if (sorting === 'desc') {
+              this.setState({sorting: 'asc'});
+              sorting = 'asc';
+            } else {
+              this.setState({sorting: 'desc'});
+              sorting = 'desc';
+            }
+
+            this.props.filterRestaurants(
+              this.props.currentFilter.value,
+              sorting
+            );
+          }}>
+          <i className={sortingClasses[this.state.sorting]}></i>
+        </button>
       </div>
     );
   }

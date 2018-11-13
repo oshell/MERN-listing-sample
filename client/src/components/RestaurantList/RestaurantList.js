@@ -23,14 +23,15 @@ class RestaurantList extends Component {
 
       for (let restaurant of restaurants) {
           if (first) {
-            subElements.push(<Header key={elemCount}>{key}</Header>);
+            subElements.push(<Header key={++elemCount}>{key}</Header>);
             first = false;
             ++elemCount;
           }
           subElements.push(<RestaurantListElement
+            key={++elemCount}
             currentFilter={this.props.currentFilter}
             element={restaurant}
-            count={++elemCount} />);
+            counter={++elemCount} />);
       }
 
       elements = [...elements, ...subElements];

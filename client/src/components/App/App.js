@@ -5,41 +5,7 @@ import SearchBar from '../SearchBar/SearchBar';
 import api from '../../controller/Api/Api';
 import Utility from './../../controller/Utility/Utility';
 import _ from 'lodash';
-
-const filters = [
-  {
-    text: 'Best Match',
-    value: 'bestMatch',
-  },
-  {
-    text: 'Newest',
-    value: 'newest',
-  },
-  {
-    text: 'Rating',
-    value: 'ratingAverage',
-  },
-  {
-    text: 'Distance',
-    value: 'distance',
-  },
-  {
-    text: 'Popularity',
-    value: 'popularity',
-  },
-  {
-    text: 'Price',
-    value: 'averageProductPrice',
-  },
-  {
-    text: 'Delivery Costs',
-    value: 'deliveryCosts',
-  },
-  {
-    text: 'Minimum Cost',
-    value: 'minCost',
-  },
-];
+import * as constants from './constants';
 
 class App extends Component {
   constructor(props){
@@ -47,7 +13,7 @@ class App extends Component {
 
     this.state = {
       restaurantsByStatus: [],
-      currentFilter: filters[0]
+      currentFilter: constants.filters[0]
     }
 
     this.getRestaurants = this.getRestaurants.bind(this);
@@ -68,23 +34,22 @@ class App extends Component {
 
   filterRestaurants(property, sorting) {
     let open_restaurants = _.orderBy(
-      this.state.restaurantsByStatus['open'],
+      this.state.restaurantsByStatus[constants.status.OPEN],
       ['sortingValues.' + property],
       [sorting]
     );
 
     let ahead_restaurants = _.orderBy(
-      this.state.restaurantsByStatus['order ahead'],
+      this.state.restaurantsByStatus[constants.status.AHEAD],
       ['sortingValues.' + property],
       [sorting]
     );
 
     let closed_restaurants = _.orderBy(
-      this.state.restaurantsByStatus['closed'],
+      this.state.restaurantsByStatus[constants.status.CLOSED],
       ['sortingValues.' + property],
       [sorting]
     );
-
 
     this.setState({
       restaurantsByStatus: {
@@ -96,9 +61,9 @@ class App extends Component {
   }
 
   changeFilter(value) {
-    const index = filters.map(o => o.value).indexOf(value);
+    const index = constants.filters.map(o => o.value).indexOf(value);
     this.setState({
-      currentFilter: filters[index]
+      currentFilter: constants.filters[index]
     });
   }
 
@@ -107,7 +72,7 @@ class App extends Component {
       <Container>
         <SearchBar
           changeFilter={this.changeFilter}
-          filters={filters}
+          filters={constants.filters}
           currentFilter={this.state.currentFilter}
           filterRestaurants={this.filterRestaurants} />
         <RestaurantList

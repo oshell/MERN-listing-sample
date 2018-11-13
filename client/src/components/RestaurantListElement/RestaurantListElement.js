@@ -5,23 +5,40 @@ import StarRatings from 'react-star-ratings';
 const style = {
   rating: {
     margin: '5px 0 0 0'
+  },
+  button: {
+    float: 'right',
+    position: 'absolute',
+    top: '10px',
+    right: '10px'
   }
 }
+
+const cashFilters = [
+  "averageProductPrice",
+  "deliveryCosts",
+  "minCost"
+]
 
 class RestaurantListElement extends Component {
 
   render() {
     let element = this.props.element;
-    let key = this.props.count;
-    console.log(element.name + ': ' + element.sortingValues.ratingAverage);
+    let counter = this.props.counter;
+    let value = element.sortingValues[this.props.currentFilter.value];
+
+    if (cashFilters.includes(this.props.currentFilter.value)) {
+      value = value/100;
+    }
+
     return(
       <Card
-        key={key}
+        key={counter}
         fluid
         color='orange'
         header={() => {
-          let name = element.name;
-          let rating = <div style={style.rating}><StarRatings
+          let name = <div key={++counter}>{element.name}</div>;
+          let rating = <div key={++counter} style={style.rating}><StarRatings
               rating={element.sortingValues.ratingAverage}
               starRatedColor='orange'
               numberOfStars={5}
@@ -32,7 +49,17 @@ class RestaurantListElement extends Component {
           return [name, rating];
         }}
         meta={element.status}
-        description={this.props.currentFilter.text + ': ' + element.sortingValues[this.props.currentFilter.value] }
+        description={() => {
+          let filterValue = <div key={++counter}>{this.props.currentFilter.text + ': ' + value}</div>;
+          let favouriteButton = <button key={++counter} className="ui icon button"
+                    style={style.button}
+                    onClick={()=>{
+                      console.log('fav');
+                    }}>
+                    <i className='heart outline icon'></i>
+                  </button>;
+          return [filterValue, favouriteButton];
+        }}
         />
     );
   }
