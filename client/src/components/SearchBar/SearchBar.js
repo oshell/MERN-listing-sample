@@ -27,7 +27,9 @@ class SearchBar extends Component {
   render() {
     return(
       <div style={style.wrapper}>
-        <Input placeholder='Search...' />
+        <Input
+          onChange={(e) => {this.props.search(e.target.value);}}
+          placeholder='Search...' />
         <Dropdown
           style={style.filter}
           button

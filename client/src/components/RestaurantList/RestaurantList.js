@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
-import { Card, Header } from 'semantic-ui-react'
+import { Card, Header, Container } from 'semantic-ui-react'
 import RestaurantListElement from '../RestaurantListElement/RestaurantListElement';
 import * as constants from '../App/constants';
+
+const style = {
+  header: {
+    margin: '15px 0 0 0'
+  }
+}
 
 class RestaurantList extends Component {
   componentDidMount() {
@@ -22,12 +28,15 @@ class RestaurantList extends Component {
 
       for (let restaurant of restaurants) {
           if (first) {
-            subElements.push(<Header key={++elemCount}>{key}</Header>);
+            subElements.push(<Container>
+              <Header style={style.header} key={++elemCount}>{key}</Header>
+            </Container>);
             first = false;
             ++elemCount;
           }
           subElements.push(<RestaurantListElement
             key={++elemCount}
+            searchTerm={this.props.searchTerm}
             status={constants.status[property]}
             currentFilter={this.props.currentFilter}
             toggleFavourite={this.props.toggleFavourite}

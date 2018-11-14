@@ -14,13 +14,15 @@ class App extends Component {
     this.state = {
       restaurantsByStatus: [],
       currentFilter: constants.filters[0],
-      currentSorting: 'desc'
+      currentSorting: 'desc',
+      searchTerm: ''
     }
 
     this.getRestaurants = this.getRestaurants.bind(this);
     this.filterRestaurants = this.filterRestaurants.bind(this);
     this.changeFilter = this.changeFilter.bind(this);
     this.toggleFavourite = this.toggleFavourite.bind(this);
+    this.search = this.search.bind(this);
   }
 
   toggleFavourite(element) {
@@ -150,6 +152,12 @@ class App extends Component {
     });
   }
 
+  search(term) {
+    this.setState({
+      searchTerm: term
+    });
+  }
+
   changeFilter(value) {
     const index = constants.filters.map(o => o.value).indexOf(value);
     this.setState({
@@ -161,11 +169,13 @@ class App extends Component {
     return(
       <Container>
         <SearchBar
+          search={this.search}
           changeFilter={this.changeFilter}
           filters={constants.filters}
           currentFilter={this.state.currentFilter}
           filterRestaurants={this.filterRestaurants} />
         <RestaurantList
+          searchTerm={this.state.searchTerm}
           toggleFavourite={this.toggleFavourite}
           currentFilter={this.state.currentFilter}
           getRestaurants={this.getRestaurants}

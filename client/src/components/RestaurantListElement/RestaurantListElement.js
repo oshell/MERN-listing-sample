@@ -32,10 +32,18 @@ class RestaurantListElement extends Component {
       value = value/100;
     }
 
+    // set cssClass for search results
+    let searchTerm = this.props.searchTerm.toLowerCase();
+    let elementName = element.name.toLowerCase();
+    let cardCss = elementName.includes(searchTerm)
+      ? {} : {display: 'none'};
+
+
     return(
       <Card
         key={counter}
         fluid
+        style={cardCss}
         color='orange'
         header={() => {
           let name = <div key={++counter}>{element.name}</div>;
