@@ -17,3 +17,14 @@ $ cd MERN-listing-sample
 $ npm install
 $ npm start
 ```
+
+### Testing
+
+Tests can be found under ```./client/src/__tests__```. and can be
+run from ```./client```. Enter watch mode with ```npm test``` and press 'a'
+to run the tests.
+
+```sh
+$ cd client
+$ npm test
+```
