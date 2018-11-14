@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Header, Container } from 'semantic-ui-react'
+import { Card, Header, Container } from 'semantic-ui-react';
 import RestaurantListElement from '../RestaurantListElement/RestaurantListElement';
 import * as constants from '../App/constants';
 
@@ -28,7 +28,7 @@ class RestaurantList extends Component {
 
       for (let restaurant of restaurants) {
           if (first) {
-            subElements.push(<Container>
+            subElements.push(<Container key={++elemCount}>
               <Header style={style.header} key={++elemCount}>{key}</Header>
             </Container>);
             first = false;

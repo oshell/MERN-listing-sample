@@ -91,13 +91,19 @@ class App extends Component {
     return array;
   }
 
-  getRestaurants() {
+  getRestaurantBaseStructure() {
     let restaurantsByStatus = {
       [constants.status.FAVORITE]: [],
       [constants.status.OPEN]: [],
       [constants.status.AHEAD]: [],
       [constants.status.CLOSED]: []
     }
+    return restaurantsByStatus;
+  }
+
+  getRestaurants() {
+    let restaurantsByStatus = this.getRestaurantBaseStructure();
+    
     api.fetchRestaurants().then((result) => {
       let restaurants = this.addCalculatedProperty(result.data.restaurants);
 
