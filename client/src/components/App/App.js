@@ -76,6 +76,19 @@ class App extends Component {
     }
   }
 
+  addCalculatedProperty(array) {
+    for (let i = 0; i < array.length; i++) {
+      let restaurant = array[i];
+      let sortingValues = restaurant.sortingValues;
+      let topRestaurants = (
+        (sortingValues.distance * sortingValues.popularity)
+        + sortingValues.ratingAverage
+      );
+      array[i].sortingValues.topRestaurants = topRestaurants;
+    }
+    return array;
+  }
+
   getRestaurants() {
     let restaurantsByStatus = {
       [constants.status.FAVORITE]: [],
@@ -84,9 +97,11 @@ class App extends Component {
       [constants.status.CLOSED]: []
     }
     api.fetchRestaurants().then((result) => {
+      let restaurants = this.addCalculatedProperty(result.data.restaurants);
+
       restaurantsByStatus = Utility.createPropertyGroups(
         restaurantsByStatus,
-        result.data.restaurants,
+        restaurants,
         'status'
       );
 

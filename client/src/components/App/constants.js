@@ -31,6 +31,10 @@ export const filters = [
     text: 'Minimum Cost',
     value: 'minCost',
   },
+  {
+    text: 'Top Restaurants',
+    value: 'topRestaurants',
+  },
 ];
 
 export const status = {
