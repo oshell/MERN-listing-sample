@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Card, Header } from 'semantic-ui-react'
 import RestaurantListElement from '../RestaurantListElement/RestaurantListElement';
-
-const openStateOrder = ['open', 'order ahead', 'closed'];
+import * as constants from '../App/constants';
 
 class RestaurantList extends Component {
   componentDidMount() {
@@ -13,9 +12,9 @@ class RestaurantList extends Component {
     let elements = [];
     let elemCount = 0;
 
-    for (let property in openStateOrder) {
+    for (let property in constants.status) {
       ++elemCount;
-      let key = openStateOrder[property];
+      let key = constants.status[property];
       let restaurants = this.props.restaurantsByStatus[key] || [];
 
       let subElements = [];
@@ -29,7 +28,9 @@ class RestaurantList extends Component {
           }
           subElements.push(<RestaurantListElement
             key={++elemCount}
+            status={constants.status[property]}
             currentFilter={this.props.currentFilter}
+            toggleFavourite={this.props.toggleFavourite}
             element={restaurant}
             counter={++elemCount} />);
       }

@@ -34,7 +34,8 @@ export const filters = [
 ];
 
 export const status = {
+  FAVORITE: 'favorite',
   OPEN: 'open',
   AHEAD: 'order ahead',
-  CLOSED: 'closed',
+  CLOSED: 'closed'
 }

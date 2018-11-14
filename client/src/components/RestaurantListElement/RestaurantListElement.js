@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card } from 'semantic-ui-react';
 import StarRatings from 'react-star-ratings';
+import * as constants from '../App/constants';
 
 const style = {
   rating: {
@@ -50,13 +51,19 @@ class RestaurantListElement extends Component {
         }}
         meta={element.status}
         description={() => {
-          let filterValue = <div key={++counter}>{this.props.currentFilter.text + ': ' + value}</div>;
-          let favouriteButton = <button key={++counter} className="ui icon button"
+          let isFavorite = this.props.status === constants.status.FAVORITE;
+          let cssClass = isFavorite ? 'heart icon' : 'heart outline icon';
+          let filterValue =
+            <div key={++counter}>
+              {this.props.currentFilter.text + ': ' + value}
+            </div>;
+          let favouriteButton =
+            <button key={++counter} className="ui icon button"
                     style={style.button}
                     onClick={()=>{
-                      console.log('fav');
+                      this.props.toggleFavourite(element);
                     }}>
-                    <i className='heart outline icon'></i>
+                    <i className={cssClass}></i>
                   </button>;
           return [filterValue, favouriteButton];
         }}

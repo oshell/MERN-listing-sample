@@ -1,14 +1,27 @@
 export default class Utility {
   static structureGroupsByProperty(array, property) {
-    let structuredArray = [];
+    let structuredObj = [];
     array.map((obj, index) => {
       let value = obj[property];
-      if(!(value in structuredArray)) {
-        structuredArray[value] = [];
+      if(!(value in structuredObj)) {
+        structuredObj[value] = [];
       }
-      structuredArray[value].push(obj);
+      structuredObj[value].push(obj);
       return obj;
     });
-    return structuredArray;
+    return structuredObj;
+  }
+
+  static createPropertyGroups(propObj, array, property) {
+    for (let p in propObj) {
+      for (let i = 0; i < array.length; i++) {
+        let element = array[i];
+        let value = element[property];
+        if (value === p) {
+          propObj[p].push(element);
+        }
+      }
+    }
+    return propObj;
   }
 }
